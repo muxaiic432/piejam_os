@@ -1,6 +1,23 @@
 #!/bin/sh
 
+# Set up audio environment for DAW usage
+export JACK_DEFAULT_SERVER="default"
+export JACK_NO_AUDIO_RESERVATION=1
+
+# Set real-time scheduling
+ulimit -r 95
+ulimit -l unlimited
+
+# Wait for audio devices to be ready
+sleep 2
+
+# Start JACK if not already running
+if ! pgrep -x "jackd" > /dev/null; then
+    jackd -R -P95 -dalsa -dhw:1 -r48000 -p128 -n2 -S &
+    sleep 3
+fi
+
 cd /piejam
-QT_QPA_EGLFS_PHYSICAL_WIDTH=155 QT_QPA_EGLFS_PHYSICAL_HEIGHT=86 QT_IM_MODULE=qtvirtualkeyboard HOME=/piejam /usr/bin/piejam_app
+QT_QPA_EGLFS_PHYSICAL_WIDTH=155 QT_QPA_EGLFS_PHYSICAL_HEIGHT=86 QT_IM_MODULE=qtvirtualkeyboard HOME=/piejam JACK_DEFAULT_SERVER="default" /usr/bin/piejam_app
 
 /sbin/halt

@@ -1,0 +1,19 @@
+# Audio device rules for Behringer Flow 8 and other USB audio interfaces
+# These rules ensure proper permissions and setup for audio devices
+
+# Behringer Flow 8 USB Audio Interface
+SUBSYSTEM=="usb", ATTR{idVendor}=="1397", ATTR{idProduct}=="0508", GROUP="audio", MODE="0664"
+SUBSYSTEM=="sound", KERNEL=="controlC*", ATTRS{idVendor}=="1397", ATTRS{idProduct}=="0508", GROUP="audio", MODE="0664"
+
+# Generic USB Audio Class devices
+SUBSYSTEM=="sound", KERNEL=="controlC*", ATTRS{bInterfaceClass}=="01", GROUP="audio", MODE="0664"
+SUBSYSTEM=="sound", KERNEL=="pcmC*", GROUP="audio", MODE="0664"
+SUBSYSTEM=="sound", KERNEL=="midiC*", GROUP="audio", MODE="0664"
+SUBSYSTEM=="sound", KERNEL=="hwC*", GROUP="audio", MODE="0664"
+
+# MIDI devices
+SUBSYSTEM=="sound", KERNEL=="midi*", GROUP="audio", MODE="0664"
+KERNEL=="midiC*", GROUP="audio", MODE="0664"
+
+# Set scheduler for USB audio devices
+ACTION=="add", SUBSYSTEM=="usb", ATTR{bInterfaceClass}=="01", ATTR{bInterfaceSubClass}=="02", RUN+="/bin/sh -c 'echo deadline > /sys/block/sda/queue/scheduler'"

@@ -1,1 +1,1 @@
-root=/dev/mmcblk0p2 rootwait rootfstype=ext4 quiet console=tty2 vt.global_cursor_default=0
+root=/dev/mmcblk0p2 rootwait rootfstype=ext4 quiet console=tty2 vt.global_cursor_default=0 isolcpus=3 rcu_nocbs=3 irqaffinity=0,1,2 dwc_otg.fiq_enable=1 dwc_otg.fiq_fsm_enable=1

@@ -6,3 +6,12 @@ gpu_mem_1024=128
 disable_splash=1
 
 dtoverlay=rpi-backlight
+
+# Audio optimizations for DAW usage
+audio_pwm_mode=2
+disable_audio_dither=1
+
+# USB optimizations for audio interfaces
+dwc_otg.fiq_enable=1
+dwc_otg.fiq_fsm_enable=1
+dwc_otg.fiq_fsm_mask=0x3
