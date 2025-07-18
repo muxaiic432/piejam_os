@@ -73,3 +73,4 @@ Thumbs.db
 *.txt.user
 /br2_external/output/
 /br2_external/local.mk
+.env
